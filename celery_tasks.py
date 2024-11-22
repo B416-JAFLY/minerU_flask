@@ -9,7 +9,16 @@ import requests
 import base64
 
 # 创建一个Celery实例，并指定消息代理（broker）为Redis
-app = Celery('tasks', broker='redis://localhost:6379/0', backend='redis://localhost:6379/0')
+# 创建一个Celery实例，并指定消息代理（broker）为Redis
+app = Celery(
+    'tasks',
+    broker='redis://localhost:6379/0',
+    backend='redis://localhost:6379/0'
+)
+
+# 设置任务结果的过期时间为5分钟（300秒）
+app.conf.result_expires = 300
+
 flask_server_url ='http://127.0.0.1:5020/results_upload'
 
 # 默认目录路径
