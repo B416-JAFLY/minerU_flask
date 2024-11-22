@@ -69,3 +69,8 @@ Thumbs.db
 *.jpg
 *.png
 *.json
+
+/celery_worker_processed_images
+/flask_received_images
+/mineru_output
+/uploads
