@@ -68,23 +68,23 @@
     - **返回示例**：
       ```json
         {
-            "images": [
-                "/download/cab31e26-a581-4a19-9ea5-037f1cf62bb8/9d23c0f11167aadb6dae34f59e58ed7d705ae8b68f5585ebc8795b8bc6693b3e.jpg",
-                "/download/cab31e26-a581-4a19-9ea5-037f1cf62bb8/39ac92725c835dae36f776498b30ffefaa564403c318f8bdc8d708a6c019d2af.jpg",
-                "/download/cab31e26-a581-4a19-9ea5-037f1cf62bb8/483cb11d21e10cac152a41f8d07fe4c18edc95b8ec890e4827a7d3d32afd1398.jpg"
-            ]
+          "images": [
+              "/download/416a0eff-638c-41bc-aeb6-9e958c8838a9/86017a6aff5535bc2e188e14cc5f10ad6795938dbf546fbd7bdd51f1004ed2ec.jpg",
+              "/download/416a0eff-638c-41bc-aeb6-9e958c8838a9/d2bc63122929dc94c3dac3442055728346c062c1f23588af8981026336d77357.jpg"
+          ],
+          "md": "/download/416a0eff-638c-41bc-aeb6-9e958c8838a9/416a0eff-638c-41bc-aeb6-9e958c8838a9.md"
         }
       ```
       
 
-3. **下载图像接口 `/download/<file_id>/<filename>`**
+3. **下载文件接口 `/download/<file_id>/<filename>`**
 
     - **请求方式**：`GET`
-    - **描述**：根据文件 ID 和图像文件名提供下载链接。
+    - **描述**：根据文件 ID 和文件名提供下载链接。
     
     - **请求参数**：
       - `file_id`：上传 PDF 时生成的唯一 ID
-      - `filename`：图片文件名（例如：`figure1.jpg`）
+      - `filename`：文件名（例如：`figure1.jpg`，`file.md`）
     
     - **返回示例**：
-      - 返回图片文件：图片数据
+      - 返回文件：图片数据或markdown文件

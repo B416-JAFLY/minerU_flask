@@ -49,16 +49,16 @@ def download_image(file_id, filename):
     """
     提供下载处理后图像的 API 端点。
     
-    根据文件 ID 和文件名返回处理后的 PNG 图片。
+    根据文件 ID 和文件名返回处理后的文件。
     
     :param file_id: 文件的唯一 ID
-    :param filename: 图片文件名
-    :return: 图片文件或错误信息
+    :param filename: 文件名
+    :return: 文件或错误信息
     """
-    # 构建图片的存储路径
+    # 构建文件的存储路径
     target_dir = os.path.join(FINAL_OUTPUT_FOLDER, file_id)
     
-    # 检查图片文件是否存在
+    # 检查文件是否存在
     if os.path.exists(os.path.join(target_dir, filename)):
         # 使用 Flask 的 `send_from_directory` 函数发送文件
         return send_from_directory(target_dir, filename)

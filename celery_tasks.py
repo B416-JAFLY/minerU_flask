@@ -146,11 +146,10 @@ def celery_upload_pdf(file_base64):
         # 如果命令执行失败，返回错误信息
         return {"error": f"Failed to run detectfigures: {str(e)}"}, 500
 
-    # 查找生成的图片和 JSON 文件
+    # 查找生成的图片
     first_subdir = get_first_subdirectory(output_path)
     if not first_subdir:
         return {"error": "No output directory found after processing"}, 404
-
 
     # 检查并移动图片
     images_dir = os.path.join(first_subdir, "images")
@@ -159,16 +158,28 @@ def celery_upload_pdf(file_base64):
 
     # Move images to final output folder
     moved_images = move_images_to_final_folder(images_dir, FINAL_OUTPUT_FOLDER, file_id)
+    
+    md_file=None
+    for file in os.listdir(first_subdir):
+        if file.endswith('.md'):
+            md_file = os.path.join(first_subdir, file)
+            break
 
+    if md_file:
+        target_md_path = os.path.join(FINAL_OUTPUT_FOLDER, file_id)
+        shutil.copy(md_file, target_md_path)
     # 清理 output 目录
     clear_output_directory(output_path)
 
-    # 构建图片和 JSON 文件的下载 URL 列表
+    # 构建图片下载 URL 列表
     image_urls = [f"/download/{file_id}/{img}" for img in moved_images]
+    md_url = f"/download/{file_id}/{file_id}.md"
 
     response_data = {"images": image_urls}
+    if md_url:
+        response_data["md"] = md_url
 
-    # 将图片返回给flask服务端
+    # 将结果返回给flask服务端
     upload_dir = os.path.join(FINAL_OUTPUT_FOLDER, file_id)
     upload_folder(upload_dir,file_id)
 
