@@ -132,27 +132,27 @@ def celery_upload_pdf(file_base64):
 
     output_path = os.path.join(OUTPUT_FOLDER, file_id)
 
-    # Step 2: 调用 `manage.py detectfigures` 处理 PDF 文件
+    # 处理 PDF 文件
     try:
         # 构建命令行参数，调用 detectfigures
         detectfigures_command = [
             'magic-pdf', '-p', pdf_save_path, '-o',
             f"{output_path}/.."
         ]
-        # 使用 subprocess 调用命令，指定工作目录为 `deepfigures-open`
+        # 使用 subprocess 调用命令
         subprocess.run(detectfigures_command, check=True, cwd='./')
 
     except subprocess.CalledProcessError as e:
         # 如果命令执行失败，返回错误信息
         return {"error": f"Failed to run detectfigures: {str(e)}"}, 500
 
-    # Step 4: 查找生成的图片和 JSON 文件
+    # 查找生成的图片和 JSON 文件
     first_subdir = get_first_subdirectory(output_path)
     if not first_subdir:
         return {"error": "No output directory found after processing"}, 404
 
 
-    # Step 5: 检查并移动图片
+    # 检查并移动图片
     images_dir = os.path.join(first_subdir, "images")
     if not os.path.exists(images_dir):
         return {"error": "No images directory found in output"}, 404
@@ -160,7 +160,7 @@ def celery_upload_pdf(file_base64):
     # Move images to final output folder
     moved_images = move_images_to_final_folder(images_dir, FINAL_OUTPUT_FOLDER, file_id)
 
-    # Step 6: 清理 output 目录
+    # 清理 output 目录
     clear_output_directory(output_path)
 
     # 构建图片和 JSON 文件的下载 URL 列表

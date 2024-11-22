@@ -7,6 +7,7 @@ app = Flask(__name__)
 current_dir = os.getcwd()
 FINAL_OUTPUT_FOLDER = os.path.join(current_dir, "./flask_received_images")
 # 主页路由，返回简短的介绍
+
 @app.route('/')
 def index():
     """
@@ -65,24 +66,6 @@ def download_image(file_id, filename):
         # 如果文件不存在，返回 404 错误
         return jsonify({"error": "File not found"}), 404
     
-@app.route('/download/<file_id>/processed_figures.json', methods=['GET'])
-def download_json(file_id):
-    """
-    提供下载处理后的 JSON 文件的 API 端点。
-    
-    :param file_id: 文件的唯一 ID
-    :return: JSON 文件或错误信息
-    """
-    # 构建处理后的 JSON 文件路径
-    json_file_path = os.path.join(FINAL_OUTPUT_FOLDER, file_id, 'processed_figures.json')
-    
-    # 检查 JSON 文件是否存在
-    if os.path.exists(json_file_path):
-        # 使用 Flask 的 `send_from_directory` 函数发送文件
-        return send_from_directory(os.path.dirname(json_file_path), 'processed_figures.json')
-    else:
-        # 如果文件不存在，返回 404 错误
-        return jsonify({"error": "JSON file not found"}), 404
 
 @app.route('/results_upload', methods=['POST'])
 def receive_file_result():
