@@ -88,3 +88,21 @@
     
     - **返回示例**：
       - 返回文件：图片数据或markdown文件
+      
+---
+
+### 批量处理 PDF 文件
+
+脚本 `pdf_batch_process.py` 用于批量处理 PDF 文件。
+
+#### 运行
+
+```bash
+python pdf_batch_process.py
+```
+
+#### 输出
+
+- 提取的 Markdown 文件保存在 `md_` 开头的文件夹中。
+- 提取的图片保存在 `images_` 开头的文件夹中。
+
