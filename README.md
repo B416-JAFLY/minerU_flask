@@ -37,8 +37,11 @@
       ```
     - 启动分布式celery worker：
       ```bash
-      celery -A celery_tasks worker --loglevel=info
+      celery -A celery_tasks worker --loglevel=info --concurrency=1 --max-tasks-per-child=5
       ```
+      --concurrency:单个worker本身可以并发执行任务，最大的并发执行数量
+      --max-tasks-per-child：worker在执行多少个任务后回收资源（理解不是很到位，大概是这个意思）
+      按需修改即可
 ---
 ### API 用法
 
