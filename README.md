@@ -37,7 +37,7 @@
       ```
     - 启动分布式celery worker：
       ```bash
-      sudo celery -A celery_tasks worker --loglevel=info
+      celery -A celery_tasks worker --loglevel=info
       ```
 ---
 ### API 用法
