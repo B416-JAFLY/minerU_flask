@@ -9,14 +9,17 @@
       conda env create -f environment.yml
       conda activate mineru
       ```
+    - 安装MinerU：
+      MinerU的安装比较复杂，根据系统新旧，是否需要cuda，安装方式不一样，可以参考[这里](https://github.com/opendatalab/MinerU/blob/master/README_zh-CN.md#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)安装
+      如果是Ubuntu22以上，且只在CPU部署，可以只简单地使用下面的命令：
+      ```bash
+      pip install -U magic-pdf[full] --extra-index-url https://wheels.myhloli.com -i https://mirrors.aliyun.com/pypi/simple
+      ```      
     - 检查mineru版本：
       ```bash
       magic-pdf --version
       ```
-    - mineru版本应为0.9.3，如果不是，需要参考[这里](https://github.com/opendatalab/MinerU/blob/master/docs/README_Ubuntu_CUDA_Acceleration_zh_CN.md)安装：
-      ```bash
-      pip install -U magic-pdf[full] --extra-index-url https://wheels.myhloli.com -i https://mirrors.aliyun.com/pypi/simple
-      ```
+      mineru版本应为0.9.3或以上
 
 2. **启动应用**：
     - 服务端
@@ -34,8 +37,11 @@
       ```
     - 启动分布式celery worker：
       ```bash
-      sudo celery -A celery_tasks worker --loglevel=info
+      celery -A celery_tasks worker --loglevel=info --concurrency=1 --max-tasks-per-child=5
       ```
+      --concurrency:单个worker本身可以并发执行任务，最大的并发执行数量
+      --max-tasks-per-child：worker在执行多少个任务后回收资源（理解不是很到位，大概是这个意思）
+      按需修改即可
 ---
 ### API 用法
 
