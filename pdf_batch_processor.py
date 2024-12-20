@@ -23,7 +23,7 @@ def rename_files_with_spaces(directory: str):
     """
     检查目录下的 PDF 文件名是否包含空格，若有，则替换为空格并重命名。
     """
-    pdf_files = glob.glob(os.path.join(directory, "*.pdf"))
+    pdf_files = glob.glob(os.path.join(directory, "*.pdf"), recursive=True)
     for file_path in pdf_files:
         file_dir, file_name = os.path.split(file_path)
         if " " in file_name:
@@ -138,7 +138,7 @@ def process_pdf_with_retry(pdf_path: str):
                 log_with_timestamp(f"已达到最大重试次数，放弃处理: {pdf_path}")
 
 def process_all_pdfs_in_directory(directory: str, max_workers: int = 4):
-    pdf_files = glob.glob(os.path.join(directory, "*.pdf"))
+    pdf_files = glob.glob(os.path.join(directory, "*.pdf"), recursive=True)
     if not pdf_files:
         log_with_timestamp("目录中没有找到 PDF 文件。")
         return
